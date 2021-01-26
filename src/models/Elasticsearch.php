@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace VitesseCms\Search\Models;
 
@@ -26,9 +26,6 @@ curl -XGET '127.0.0.1:9200/craftbeershirts_nl/_search?pretty=true' -d '
 }'
 */
 
-/**
- * Class Elasticsearch
- */
 class Elasticsearch extends AbstractInjectable
 {
 
@@ -47,16 +44,10 @@ class Elasticsearch extends AbstractInjectable
      */
     protected $index;
 
-    /**
-     * Elasticsearch constructor.
-     */
-    public function __construct()
-    {
-        $this->client = ClientBuilder::create()
-            ->setHosts([$this->config->get('elasticsearch')->get('host')])
-            ->build();
-        $this->index = $this->config->get('account');
-        $this->clientEnabled = true;
+    public function __construct(Client $client, string $index){
+        $this->client = $client;
+        $this->index = $index;
+        $this->clientEnabled = false;
 
         if(!$this->client->ping()) :
             if(!DebugUtil::isDev()) :
@@ -66,13 +57,11 @@ class Elasticsearch extends AbstractInjectable
                     ''
                 );
             endif;
-            $this->clientEnabled = false;
+        else :
+            $this->clientEnabled = true;
         endif;
     }
 
-    /**
-     * @param Item $item
-     */
     public function add(Item $item): void
     {
         $datagroup = Datagroup::findById($item->_('datagroup'));
@@ -117,9 +106,6 @@ class Elasticsearch extends AbstractInjectable
         endif;
     }
 
-    /**
-     * @param Item $item
-     */
     public function delete(Item $item): void
     {
         foreach (Language::findAll() as $language) :
@@ -133,9 +119,6 @@ class Elasticsearch extends AbstractInjectable
         endforeach;
     }
 
-    /**
-     * deleteIndex
-     */
     public function deleteIndex(): void
     {
         foreach (Language::findAll() as $language) :
@@ -147,20 +130,12 @@ class Elasticsearch extends AbstractInjectable
         endforeach;
     }
 
-    /**
-     * @param string $index
-     *
-     * @return bool
-     */
     public function indexExists(string $index) : bool
     {
         $params = ['index' => $index];
         return $this->client->indices()->exists($params);
     }
 
-    /**
-     * @return array
-     */
     public function search() : array
     {
         $params = [
@@ -180,11 +155,7 @@ class Elasticsearch extends AbstractInjectable
     }
 
     /**
-     * @param array $filter
-     *
      * https://github.com/ongr-io/ElasticsearchDSL/blob/master/docs/index.md
-     *
-     * @return array
      */
     protected function buildQueryFromFilter(array $filter) : array
     {

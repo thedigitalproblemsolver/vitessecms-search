@@ -1,36 +1,32 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace VitesseCms\Search\Controllers;
 
+use Phalcon\Tag;
 use VitesseCms\Core\AbstractController;
 use VitesseCms\Content\Models\Item;
 use VitesseCms\Search\Models\Elasticsearch;
 
-/**
- * Class AdminindexController
- */
 class AdminindexController extends AbstractController
 {
-
-    /**
-     * indexAction
-     */
     public function indexAction(): void
     {
         $this->view->setVar('content',
-            '<a href="admin/search/adminindex/populatefull" class="btn btn-info">Re-index all items</a><br /><br />
-            ');
+            Tag::linkTo([
+                'action' => 'admin/search/adminindex/populatefull',
+                'class' => 'btn btn-info',
+                'text' => 'Re-index all items'
+            ]))
+        ;
         parent::prepareView();
     }
 
-    /**
-     * repopulate elasticsearch indexes
-     * @throws \Phalcon\Mvc\Collection\Exception
-     */
     public function populateFullAction(): void
     {
-        $elasticSearch = new Elasticsearch();
-        $elasticSearch->deleteIndex();
+
+        $this->search->deleteIndex();
+        echo 'hier';
+        die();
 
         //TODO eerst naar filterbare datagroupen zoeken?
         Item::setFindValue('roles',['$in' => [null,'']]);
