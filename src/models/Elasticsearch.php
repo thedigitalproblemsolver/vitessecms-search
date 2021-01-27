@@ -51,11 +51,12 @@ class Elasticsearch extends AbstractInjectable
 
         if(!$this->client->ping()) :
             if(!DebugUtil::isDev()) :
+                /*
                 $this->mailer->sendMail(
-                    'jasper@craftbeershirts.net',
+                    '',
                     'Elasticsearch ligt eruit',
                     ''
-                );
+                );*/
             endif;
         else :
             $this->clientEnabled = true;
