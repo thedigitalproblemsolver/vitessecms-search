@@ -1,0 +1,26 @@
+{
+  "name": "vitessecms/search",
+  "type": "library",
+  "description": "Search module for VitesseCms",
+  "keywords": ["php","phalcon","vitessecms"],
+  "homepage": "https://github.com/thedigitalproblemsolver/VitesseCMS",
+  "license": "GPL-2.0-or-later",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Jasper Jaklofsky",
+      "email": "info@thedigitalproblemsolver.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "VitesseCms\\Search\\": "src/"
+    }
+  },
+  "require": {
+    "elasticsearch/elasticsearch": "^5.1",
+    "ongr/elasticsearch-dsl": "^5.0",
+    "vitessecms/admin": "~0.0.11",
+    "vitessecms/content": "~0.0.7"
+  }
+}
