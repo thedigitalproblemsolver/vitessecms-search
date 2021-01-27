@@ -16,5 +16,9 @@
     "psr-4": {
       "VitesseCms\\Search\\": "src/"
     }
+  },
+  "require": {
+    "vitessecms/admin": "~0.0.11",
+    "vitessecms/content": "~0.0.7"
   }
 }

@@ -96,7 +96,7 @@ class Elasticsearch extends AbstractInjectable
 
                 $params = [
                     'index' => $this->index.'_'.$language->_('short'),
-                    'type' => $item->_('datagroup'),
+                    'type' => 'item',
                     'id' => (string)$item->getId(),
                     'routing' => $item->_('slug', $language->_('short')),
                     'body' => $fields
