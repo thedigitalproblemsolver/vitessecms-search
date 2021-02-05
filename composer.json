@@ -20,8 +20,9 @@
   "require": {
     "elasticsearch/elasticsearch": "^5.1",
     "ongr/elasticsearch-dsl": "^5.0",
-    "vitessecms/admin": "~0.0.12",
+    "vitessecms/admin": "~0.0.13",
     "vitessecms/content": "~0.0.8",
-    "vitessecms/core": "~0.0.1"
+    "vitessecms/core": "~0.0.1",
+    "vitessecms/datafield": "~0.0.4"
   }
 }
