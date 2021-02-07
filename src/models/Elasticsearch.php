@@ -7,7 +7,7 @@ use Elasticsearch\ClientBuilder;
 use VitesseCms\Content\Models\Item;
 use VitesseCms\Core\AbstractInjectable;
 use VitesseCms\Datafield\Models\Datafield;
-use VitesseCms\Core\Models\Datagroup;
+use VitesseCms\Datagroup\Models\Datagroup;
 use VitesseCms\Core\Utils\DebugUtil;
 use VitesseCms\Language\Models\Language;
 use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
