@@ -12,7 +12,7 @@ class ItemRepository extends \VitesseCms\Content\Repositories\ItemRepository
     {
         return $this->findAll(
             new FindValueIterator([
-                new FindValue('roles',['$in' => [null,'']]),
+                new FindValue('roles', ['$in' => [null, '']]),
             ]),
             true,
             29999

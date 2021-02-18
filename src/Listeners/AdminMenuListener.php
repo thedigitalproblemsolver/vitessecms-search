@@ -14,7 +14,7 @@ class AdminMenuListener
             $children = new AdminMenuNavBarChildren();
             $children->addChild('Search', 'admin/search/adminindex/index');
 
-            $adminMenu->addDropdown('System',$children);
+            $adminMenu->addDropdown('System', $children);
         endif;
     }
 }
