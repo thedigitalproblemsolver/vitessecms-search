@@ -13,7 +13,8 @@ class AdminRepositoryCollection implements BaseRepositoriesInterface
 
     public function __construct(
         ItemRepository $itemRepository
-    ) {
+    )
+    {
         $this->item = $itemRepository;
     }
 }

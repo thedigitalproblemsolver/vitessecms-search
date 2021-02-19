@@ -17,8 +17,7 @@ class AdminindexController extends AbstractController implements AdminRepositori
                 'action' => 'admin/search/adminindex/populatefull',
                 'class' => 'btn btn-info',
                 'text' => 'Re-index all items'
-            ]))
-        ;
+            ]));
         parent::prepareView();
     }
 

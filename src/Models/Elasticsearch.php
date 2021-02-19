@@ -18,14 +18,13 @@ use ONGR\ElasticsearchDSL\Search;
 //TODO : https://www.elastic.co/guide/en/elasticsearch/client/php-api/current/_configuration.html
 
 /**
-curl -XGET '127.0.0.1:9200/craftbeershirts_nl/_search?pretty=true' -d '
-{
-    "query" : {
-        "match_all" : {}
-    }
-}'
-*/
-
+ * curl -XGET '127.0.0.1:9200/craftbeershirts_nl/_search?pretty=true' -d '
+ * {
+ * "query" : {
+ * "match_all" : {}
+ * }
+ * }'
+ */
 class Elasticsearch extends AbstractInjectable
 {
 
@@ -44,13 +43,14 @@ class Elasticsearch extends AbstractInjectable
      */
     protected $index;
 
-    public function __construct(Client $client, string $index){
+    public function __construct(Client $client, string $index)
+    {
         $this->client = $client;
         $this->index = $index;
         $this->clientEnabled = false;
 
-        if(!$this->client->ping()) :
-            if(!DebugUtil::isDev()) :
+        if (!$this->client->ping()) :
+            if (!DebugUtil::isDev()) :
                 /*
                 $this->mailer->sendMail(
                     '',
@@ -66,7 +66,7 @@ class Elasticsearch extends AbstractInjectable
     public function add(Item $item): void
     {
         $datagroup = Datagroup::findById($item->_('datagroup'));
-        if($datagroup) :
+        if ($datagroup) :
             $datafields = [];
             foreach ((array)$datagroup->_('datafields') as $field) :
                 if (!empty($field['filterable'])) :
@@ -80,14 +80,14 @@ class Elasticsearch extends AbstractInjectable
 
             foreach (Language::findAll() as $language) :
                 $fields = [];
-                foreach($datafields as $datafield) :
-                    $elasticSearchField = $datafield->_('calling_name').'_'.$language->_('short');
+                foreach ($datafields as $datafield) :
+                    $elasticSearchField = $datafield->_('calling_name') . '_' . $language->_('short');
                     $fields[$elasticSearchField] = $datafield->getSearchValue(
                         $item,
                         $language->_('short')
                     );
 
-                    if(
+                    if (
                         isset($fields[$datafield->_('calling_name')])
                         && \is_string($fields[$datafield->_('calling_name')])
                     ) :
@@ -96,7 +96,7 @@ class Elasticsearch extends AbstractInjectable
                 endforeach;
 
                 $params = [
-                    'index' => $this->index.'_'.$language->_('short'),
+                    'index' => $this->index . '_' . $language->_('short'),
                     'type' => 'item',
                     'id' => (string)$item->getId(),
                     'routing' => $item->_('slug', $language->_('short')),
@@ -111,7 +111,7 @@ class Elasticsearch extends AbstractInjectable
     {
         foreach (Language::findAll() as $language) :
             $params = [
-                'index' => $this->index.'_'.$language->_('short'),
+                'index' => $this->index . '_' . $language->_('short'),
                 'type' => 'item',
                 'id' => $item->getId(),
             ];
@@ -123,30 +123,30 @@ class Elasticsearch extends AbstractInjectable
     public function deleteIndex(): void
     {
         foreach (Language::findAll() as $language) :
-            $index = $this->index.'_'.$language->_('short');
-            if( $this->indexExists($index)) :
+            $index = $this->index . '_' . $language->_('short');
+            if ($this->indexExists($index)) :
                 $params = ['index' => $index];
                 $this->client->indices()->delete($params);
             endif;
         endforeach;
     }
 
-    public function indexExists(string $index) : bool
+    public function indexExists(string $index): bool
     {
         $params = ['index' => $index];
         return $this->client->indices()->exists($params);
     }
 
-    public function search() : array
+    public function search(): array
     {
         $params = [
-            'index' => $this->index.'_'.$this->configuration->getLanguageShort(),
+            'index' => $this->index . '_' . $this->configuration->getLanguageShort(),
             'type' => $this->request->get('searchGroups'),
             'body' => $this->buildQueryFromFilter($this->request->get('filter', null, [])),
             'size' => 99
         ];
 
-        if($this->clientEnabled && !empty($params['body'])) :
+        if ($this->clientEnabled && !empty($params['body'])) :
             $searchResult = $this->client->search($params);
         else :
             $searchResult = ['hits' => ['total' => 0]];
@@ -158,27 +158,27 @@ class Elasticsearch extends AbstractInjectable
     /**
      * https://github.com/ongr-io/ElasticsearchDSL/blob/master/docs/index.md
      */
-    protected function buildQueryFromFilter(array $filter) : array
+    protected function buildQueryFromFilter(array $filter): array
     {
         $searchTerm = strtolower(trim($this->request->get('search')));
         $search = new Search();
         $stringQueryFields = [];
         $langugaeShort = $this->configuration->getLanguageShort();
 
-        foreach($filter as $type => $filterItem) :
-            switch($type) :
+        foreach ($filter as $type => $filterItem) :
+            switch ($type) :
                 case 'textFields':
-                    if($this->request->get('search') && !empty($this->request->get('search'))) :
+                    if ($this->request->get('search') && !empty($this->request->get('search'))) :
                         foreach ((array)$filterItem as $fieldName) :
-                            $stringQueryFields[] = $fieldName.'_'.$langugaeShort;
+                            $stringQueryFields[] = $fieldName . '_' . $langugaeShort;
                         endforeach;
                     endif;
                     break;
                 case 'range' :
                     foreach ((array)$filterItem as $fieldName => $range) :
-                        $range = explode(',',$range);
+                        $range = explode(',', $range);
                         $search->addQuery(new RangeQuery(
-                            $fieldName.'_'.$langugaeShort,
+                            $fieldName . '_' . $langugaeShort,
                             [
                                 'gte' => $range[0],
                                 'lte' => $range[1]
@@ -187,25 +187,25 @@ class Elasticsearch extends AbstractInjectable
                     endforeach;
                     break;
                 default:
-                    if(\is_array($filterItem)) :
+                    if (\is_array($filterItem)) :
                         $terms = [];
                         foreach ($filterItem as $term) :
-                            if(\is_array($term)) :
-                                $term = implode(' OR ',$term);
+                            if (\is_array($term)) :
+                                $term = implode(' OR ', $term);
                             endif;
                             $terms[] = $term;
                         endforeach;
                         $matchQuery = new MatchQuery(
-                            $type.'_'.$langugaeShort,
-                            implode(' OR ',$terms)
+                            $type . '_' . $langugaeShort,
+                            implode(' OR ', $terms)
                         );
                         $search->addQuery($matchQuery);
                     else:
-                        if(!empty($filterItem)) :
+                        if (!empty($filterItem)) :
                             $queryStringQuery = new QueryStringQuery($filterItem);
                             $queryStringQuery->addParameter(
                                 'fields',
-                                [$type.'_'.$langugaeShort]
+                                [$type . '_' . $langugaeShort]
                             );
                             $search->addQuery($queryStringQuery);
                         endif;
@@ -214,8 +214,8 @@ class Elasticsearch extends AbstractInjectable
             endswitch;
         endforeach;
 
-        if(\count($stringQueryFields) > 0 ) :
-            $queryStringQuery = new QueryStringQuery('*'.$searchTerm.'*');
+        if (\count($stringQueryFields) > 0) :
+            $queryStringQuery = new QueryStringQuery('*' . $searchTerm . '*');
             $queryStringQuery->addParameter('fields', $stringQueryFields);
             $search->addQuery($queryStringQuery);
         endif;
