@@ -14,6 +14,10 @@ use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
 use ONGR\ElasticsearchDSL\Query\FullText\QueryStringQuery;
 use ONGR\ElasticsearchDSL\Query\TermLevel\RangeQuery;
 use ONGR\ElasticsearchDSL\Search;
+use function count;
+use function is_array;
+use function is_object;
+use function is_string;
 
 //TODO : https://www.elastic.co/guide/en/elasticsearch/client/php-api/current/_configuration.html
 
@@ -72,7 +76,7 @@ class Elasticsearch extends AbstractInjectable
                 if (!empty($field['filterable'])) :
                     $datafield = Datafield::findById($field['id']);
                     /** @var Datafield $datafield */
-                    if (\is_object($datafield) && $datafield->_('published')) :
+                    if (is_object($datafield) && $datafield->_('published')) :
                         $datafields[] = $datafield;
                     endif;
                 endif;
@@ -89,7 +93,7 @@ class Elasticsearch extends AbstractInjectable
 
                     if (
                         isset($fields[$datafield->_('calling_name')])
-                        && \is_string($fields[$datafield->_('calling_name')])
+                        && is_string($fields[$datafield->_('calling_name')])
                     ) :
                         $fields[$elasticSearchField] = strtolower($fields[$datafield->_('calling_name')]);
                     endif;
@@ -187,10 +191,10 @@ class Elasticsearch extends AbstractInjectable
                     endforeach;
                     break;
                 default:
-                    if (\is_array($filterItem)) :
+                    if (is_array($filterItem)) :
                         $terms = [];
                         foreach ($filterItem as $term) :
-                            if (\is_array($term)) :
+                            if (is_array($term)) :
                                 $term = implode(' OR ', $term);
                             endif;
                             $terms[] = $term;
@@ -214,7 +218,7 @@ class Elasticsearch extends AbstractInjectable
             endswitch;
         endforeach;
 
-        if (\count($stringQueryFields) > 0) :
+        if (count($stringQueryFields) > 0) :
             $queryStringQuery = new QueryStringQuery('*' . $searchTerm . '*');
             $queryStringQuery->addParameter('fields', $stringQueryFields);
             $search->addQuery($queryStringQuery);
