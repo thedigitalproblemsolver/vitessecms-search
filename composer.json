@@ -22,7 +22,7 @@
     "ongr/elasticsearch-dsl": "^5.0",
     "vitessecms/admin": "~0.2.9",
     "vitessecms/content": "~0.2.15",
-    "vitessecms/core": "~0.2.16",
+    "vitessecms/core": "~0.2.19",
     "vitessecms/datafield": "~0.2.13",
     "vitessecms/datagroup": "~0.2.10",
     "vitessecms/database": "~0.2.5"
