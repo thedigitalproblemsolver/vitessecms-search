@@ -2,7 +2,11 @@
   "name": "vitessecms/search",
   "type": "library",
   "description": "Search module for VitesseCms",
-  "keywords": ["php","phalcon","vitessecms"],
+  "keywords": [
+    "php",
+    "phalcon",
+    "vitessecms"
+  ],
   "homepage": "https://github.com/thedigitalproblemsolver/VitesseCMS",
   "license": "GPL-2.0-or-later",
   "version": "0.2.1",
@@ -22,7 +26,7 @@
     "ongr/elasticsearch-dsl": "^5.0",
     "vitessecms/admin": "~0.2.9",
     "vitessecms/content": "~0.2.21",
-    "vitessecms/core": "~0.2.24",
+    "vitessecms/core": "~0.2.25",
     "vitessecms/datafield": "~0.2.13",
     "vitessecms/datagroup": "~0.2.11",
     "vitessecms/database": "~0.2.6"
