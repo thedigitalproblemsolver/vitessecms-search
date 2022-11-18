@@ -4,7 +4,7 @@ namespace VitesseCms\Search;
 
 use VitesseCms\Admin\Utils\AdminUtil;
 use VitesseCms\Core\AbstractModule;
-use Phalcon\DiInterface;
+use Phalcon\Di\DiInterface;
 use VitesseCms\Search\Repositories\AdminRepositoryCollection;
 use VitesseCms\Search\Repositories\ItemRepository;
 
