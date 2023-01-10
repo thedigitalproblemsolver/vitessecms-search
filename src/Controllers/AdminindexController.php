@@ -4,8 +4,6 @@ namespace VitesseCms\Search\Controllers;
 
 use Phalcon\Tag;
 use VitesseCms\Core\AbstractController;
-use VitesseCms\Content\Models\Item;
-use VitesseCms\Search\Models\Elasticsearch;
 use VitesseCms\Search\Repositories\AdminRepositoriesInterface;
 
 class AdminindexController extends AbstractController implements AdminRepositoriesInterface

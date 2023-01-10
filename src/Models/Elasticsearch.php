@@ -3,17 +3,16 @@
 namespace VitesseCms\Search\Models;
 
 use Elasticsearch\Client;
-use Elasticsearch\ClientBuilder;
-use VitesseCms\Content\Models\Item;
-use VitesseCms\Core\AbstractInjectable;
-use VitesseCms\Datafield\Models\Datafield;
-use VitesseCms\Datagroup\Models\Datagroup;
-use VitesseCms\Core\Utils\DebugUtil;
-use VitesseCms\Language\Models\Language;
 use ONGR\ElasticsearchDSL\Query\FullText\MatchQuery;
 use ONGR\ElasticsearchDSL\Query\FullText\QueryStringQuery;
 use ONGR\ElasticsearchDSL\Query\TermLevel\RangeQuery;
 use ONGR\ElasticsearchDSL\Search;
+use VitesseCms\Content\Models\Item;
+use VitesseCms\Core\AbstractInjectable;
+use VitesseCms\Core\Utils\DebugUtil;
+use VitesseCms\Datafield\Models\Datafield;
+use VitesseCms\Datagroup\Models\Datagroup;
+use VitesseCms\Language\Models\Language;
 use function count;
 use function is_array;
 use function is_object;
@@ -111,19 +110,6 @@ class Elasticsearch extends AbstractInjectable
         endif;
     }
 
-    public function delete(Item $item): void
-    {
-        foreach (Language::findAll() as $language) :
-            $params = [
-                'index' => $this->index . '_' . $language->_('short'),
-                'type' => 'item',
-                'id' => $item->getId(),
-            ];
-
-            $this->client->delete($params);
-        endforeach;
-    }
-
     public function deleteIndex(): void
     {
         foreach (Language::findAll() as $language) :
@@ -139,6 +125,19 @@ class Elasticsearch extends AbstractInjectable
     {
         $params = ['index' => $index];
         return $this->client->indices()->exists($params);
+    }
+
+    public function delete(Item $item): void
+    {
+        foreach (Language::findAll() as $language) :
+            $params = [
+                'index' => $this->index . '_' . $language->_('short'),
+                'type' => 'item',
+                'id' => $item->getId(),
+            ];
+
+            $this->client->delete($params);
+        endforeach;
     }
 
     public function search(): array
