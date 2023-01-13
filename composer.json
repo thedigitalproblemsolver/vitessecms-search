@@ -29,6 +29,6 @@
     "vitessecms/core": "~0.3.0",
     "vitessecms/datafield": "~0.3.0",
     "vitessecms/datagroup": "~0.3.0",
-    "vitessecms/database": "~0.3.0"
+    "vitessecms/database": "~0.3.1"
   }
 }
