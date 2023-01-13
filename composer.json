@@ -24,11 +24,11 @@
   "require": {
     "elasticsearch/elasticsearch": "^5.1",
     "ongr/elasticsearch-dsl": "^5.0",
-    "vitessecms/admin": "~0.2.9",
-    "vitessecms/content": "~0.2.21",
-    "vitessecms/core": "~0.2.25",
-    "vitessecms/datafield": "~0.2.13",
-    "vitessecms/datagroup": "~0.2.11",
-    "vitessecms/database": "~0.2.6"
+    "vitessecms/admin": "~0.3.0",
+    "vitessecms/content": "~0.3.0",
+    "vitessecms/core": "~0.3.0",
+    "vitessecms/datafield": "~0.3.0",
+    "vitessecms/datagroup": "~0.3.0",
+    "vitessecms/database": "~0.3.0"
   }
 }
