@@ -24,8 +24,8 @@
   "require": {
     "ongr/elasticsearch-dsl": "^7.2.2",
     "vitessecms/admin": "~0.3.2",
-    "vitessecms/content": "~0.4.2",
-    "vitessecms/core": "~0.4.4",
+    "vitessecms/content": "~0.4.3",
+    "vitessecms/core": "~0.4.5",
     "vitessecms/datafield": "~0.3.2",
     "vitessecms/datagroup": "~0.4.0",
     "vitessecms/database": "~0.3.4"
