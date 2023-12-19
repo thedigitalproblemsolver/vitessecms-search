@@ -23,7 +23,7 @@
   },
   "require": {
     "ongr/elasticsearch-dsl": "^7.2.2",
-    "vitessecms/admin": "^1.9.0",
+    "vitessecms/admin": "^1.10.0",
     "vitessecms/content": "^1.7.2",
     "vitessecms/core": "^1.7.1",
     "vitessecms/datafield": "^1.4.1",
