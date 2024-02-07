@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace VitesseCms\Search\Listeners;
 
@@ -8,10 +9,10 @@ use VitesseCms\Search\Listeners\Admin\AdminMenuListener;
 
 class InitiateListeners implements InitiateListenersInterface
 {
-    public static function setListeners(InjectableInterface $di): void
+    public static function setListeners(InjectableInterface $injectable): void
     {
-        if($di->user->hasAdminAccess()):
-            $di->eventsManager->attach('adminMenu', new AdminMenuListener());
+        if ($injectable->user->hasAdminAccess()):
+            $injectable->eventsManager->attach('adminMenu', new AdminMenuListener());
         endif;
     }
 }
